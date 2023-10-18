@@ -64,4 +64,31 @@
             }
         });
     }
+
+    $(document).ready(function() {
+        $("#addForm").on('submit', function(e) {
+            e.preventDefault();
+            $("#saveBtn").html('Processing...').attr('disabled', 'disabled');
+            var link = $("#addForm").attr('action');
+            $.ajax({
+                url: link,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    $("#saveBtn").html('Save').removeAttr('disabled');
+                    pond.removeFiles(); //clear
+                    alert('Berhasil')
+                },
+                error: function(response) {
+                    $("#saveBtn").html('Save').removeAttr('disabled');
+                    alert(response.error);
+                }
+            });
+        });
+    });
 </script>

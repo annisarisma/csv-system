@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-<form action="/product-store" method="POST" enctype="multipart/form-data">
+<form action="/csv-store" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row mb-3">
         <div class="col-sm-12">
@@ -18,8 +18,30 @@
     </div>
 </form>
 
+<input id="username" type="hidden" value="{{ auth()->user()->username }}">
+
 @endsection
 
 @section('script')
     @include('layouts.flash-message')
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('f0b924ed624e024f80e6', {
+            cluster: 'ap1'
+        });
+
+        var usernameInput = document.getElementById("username");
+        var usernameValue = usernameInput.value;
+        
+        var channel = pusher.subscribe('csvImport-channel');
+        channel.bind('csvImport-event', function(data) {
+            if (usernameValue !== data.name) {
+                toastr.info(JSON.stringify(data.name) + 'recently upload file')
+            }
+        });
+    </script>
 @endsection
