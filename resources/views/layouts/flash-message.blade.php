@@ -4,3 +4,8 @@
         toastr.success( '{{ session('success-alert')['message'] }}' )
     </script>
 @endif
+@if(session('failed-alert'))
+    <script>
+        toastr.error( '{{ session('failed-alert')['message'] }}' )
+    </script>
+@endif

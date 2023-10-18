@@ -152,9 +152,9 @@ class CsvController extends Controller
                 'message' => 'Upload file successfully'
             ]);
         } else {
-            return view('csv-create', with('success-alert', [
-                'message' => 'File extension not accept, require .csv file'
-            ]));
+            return redirect('/csv-create')->with('failed-alert', [
+                'message' => 'Upload file failed, extension not allowed'
+            ]);
         }
     }
 
