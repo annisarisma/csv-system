@@ -36,7 +36,7 @@
                     <tr>
                         <td>{{ $csvFile["created_at"] }}</td>
                         <td>{{ $csvFile['filename'] }}</td>
-                        <td>{{ $csvFile['status'] }}</td>
+                        <td id="status_csv-{{ $csvFile['id'] }}">{{ $csvFile['status'] }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -67,7 +67,22 @@
         channel.bind('csvImport-event', function(data) {
             if (usernameValue !== data.name) {
                 toastr.info(JSON.stringify(data.name) + 'recently upload file')
+
+                // Append new record to the table
+                $("#content").append(`
+                    <tr>
+                        <td id="time-${data.csvFile.id}">${data.timeSet} (${data.timeAgo})</td>
+                        <td>${data.csvFile.filename}</td>
+                        <td id="status_csv-${data.csvFile.id}">${data.csvFile.status}</td>
+                    </tr>
+                `)
             }
+        });
+
+        // Notify user a real time data if status was updated
+        var channel = pusher.subscribe('jobStatus-channel');
+        channel.bind('jobStatus-event', function(data) {
+            $(`#status_csv-${data.csvFileId}`).text(`${data.status}`);
         });
     </script>
 @endsection

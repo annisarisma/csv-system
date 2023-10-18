@@ -33,18 +33,18 @@ class CsvImportJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $temporary = $this->temporary;
+        $csvFileId = $this->csvFileId;
+
+        $csvFile = Csv::where('id', $csvFileId)->first();
+        $csvFile->update([
+            'status' => "Processing"
+        ]);
+
+        $this->broadcastStatus($csvFileId, "Processing");
         
         try {
-            $temporary = $this->temporary;
-            $csvFileId = $this->csvFileId;
-    
-            $csvFile = Csv::where('id', $csvFileId)->first();
-            $csvFile->update([
-                'status' => "Processing"
-            ]);
-    
-            $this->broadcastStatus($csvFileId, "Processing");
-            
+
             $file_path = storage_path('app/public/csv_file/' . $temporary);
 
             //load the CSV document from a file path
