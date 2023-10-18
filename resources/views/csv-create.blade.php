@@ -18,6 +18,32 @@
     </div>
 </form>
 
+<div class="table-responsive">
+    <div class="card">
+        <table id="example" class="table table-striped table-bordered hover" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Filename</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="content">
+                @php
+                    use Carbon\Carbon;
+                @endphp
+                @foreach ($csvFiles as $csvFile)
+                    <tr>
+                        <td>{{ $csvFile["created_at"] }}</td>
+                        <td>{{ $csvFile['filename'] }}</td>
+                        <td>{{ $csvFile['status'] }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <input id="username" type="hidden" value="{{ auth()->user()->username }}">
 
 @endsection

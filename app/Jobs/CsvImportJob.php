@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\JobStatusEvent;
 use App\Models\Csv;
 use App\Models\Product;
 use Illuminate\Bus\Queueable;
@@ -32,15 +33,18 @@ class CsvImportJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $temporary = $this->temporary;
-        $csvFileId = $this->csvFileId;
-
-        $csvFile = Csv::where('id', $csvFileId)->first();
-        $csvFile->update([
-            'status' => "Processing"
-        ]);
-
+        
         try {
+            $temporary = $this->temporary;
+            $csvFileId = $this->csvFileId;
+    
+            $csvFile = Csv::where('id', $csvFileId)->first();
+            $csvFile->update([
+                'status' => "Processing"
+            ]);
+    
+            $this->broadcastStatus($csvFileId, "Processing");
+            
             $file_path = storage_path('app/public/csv_file/' . $temporary);
 
             //load the CSV document from a file path
@@ -79,8 +83,18 @@ class CsvImportJob implements ShouldQueue
                     ]);
                 }
             }
+            $this->broadcastStatus($csvFileId, "Finished");
         } catch (\Exception $e) {
-            // 
+            $this->broadcastStatus($csvFileId, "Failed");
         }
+    }
+
+    protected function broadcastStatus($csvFileId, $status)
+    {
+        $csvFile = Csv::where('id', $csvFileId)->first();
+        $csvFile->update([
+            'status' => $status
+        ]);
+        event(new JobStatusEvent($csvFile->id, $csvFile->status));
     }
 }

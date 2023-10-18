@@ -45,8 +45,31 @@ class CsvController extends Controller
             Session::remove('filename');
         }
 
+        // Query Data
+        $csvFiles = Csv::all();
+        
+        $csvFileDatas = [];
+        foreach ($csvFiles as $csvFile) {
+            $createdAt = Carbon::parse($csvFile->created_at);
+            $timeAgo = $createdAt->diffForHumans();
+            $timeSet = Carbon::parse($csvFile->created_at)->format('d-m-Y H:i');
+            
+            // Add to Array
+            $csvFileDatas[] = [
+                'id' => $csvFile->id,
+                'user_id' => $csvFile->user_id,
+                'filename' => $csvFile->filename,
+                'status' => $csvFile->status,
+                'timeAgo' => $timeAgo,
+                'timeSet' => $timeSet,
+                'created_at' => $csvFile->created_at,
+                'updated_at' => $csvFile->updated_at,
+            ];
+        }
+
         return view('csv-create', [
-            'title' => 'CSV Create'
+            'title' => 'CSV Create',
+            'csvFiles' => $csvFileDatas
         ]);
     }
 
