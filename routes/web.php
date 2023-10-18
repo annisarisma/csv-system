@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/register', 'index');
+    Route::get('/register', 'register_index');
     Route::post('/register/store', 'store');
+    Route::get('/login', 'login_index');
 });
