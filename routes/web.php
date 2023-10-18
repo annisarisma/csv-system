@@ -27,6 +27,7 @@ Route::controller(UserController::class)->group(function () {
 });
 Route::controller(CsvController::class)->group(function () {
     Route::get('/csv-create', 'create');
+    Route::get('/csv-create/real-time', 'real_time');
     Route::post('/csv-store', 'store');
     Route::post('/csv-file/temporary', 'temporary_store')->name('csv-upload');
     Route::delete('/csv-file/temporary', 'temporary_destroy')->name('csv-destroy');

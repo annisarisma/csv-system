@@ -34,7 +34,7 @@
                 @endphp
                 @foreach ($csvFiles as $csvFile)
                     <tr>
-                        <td>{{ $csvFile["created_at"] }}</td>
+                        <td id="time-{{ $csvFile['id'] }}">{{ Carbon::parse($csvFile['created_at'])->format('d-m-Y H:i') }} {{ '(' . $csvFile['timeAgo'] . ')' }}</td>
                         <td>{{ $csvFile['filename'] }}</td>
                         <td id="status_csv-{{ $csvFile['id'] }}">{{ $csvFile['status'] }}</td>
                     </tr>
@@ -66,12 +66,12 @@
         var channel = pusher.subscribe('csvImport-channel');
         channel.bind('csvImport-event', function(data) {
             if (usernameValue !== data.name) {
-                toastr.info(JSON.stringify(data.name) + 'recently upload file')
+                toastr.info(JSON.stringify(data.name) + ' recently upload a new file')
 
                 // Append new record to the table
                 $("#content").append(`
                     <tr>
-                        <td id="time-${data.csvFile.id}">${data.timeSet} (${data.timeAgo})</td>
+                        <td id="time-${data.csvFile.id}">${data.timeSet}</td>
                         <td>${data.csvFile.filename}</td>
                         <td id="status_csv-${data.csvFile.id}">${data.csvFile.status}</td>
                     </tr>
@@ -84,5 +84,23 @@
         channel.bind('jobStatus-event', function(data) {
             $(`#status_csv-${data.csvFileId}`).text(`${data.status}`);
         });
+    </script>
+
+    {{-- Real Time Data --}}
+    <script>
+        function updateRealTimeData() {
+            $.ajax({
+                url: '/csv-create/real-time',
+                method: 'GET',
+                success: function(data) {
+                    data.csvFileDatas.forEach(function(item) {
+                        $(`#time-${item.id}`).text(`${item.timeSet} (${item.timeAgo})`);
+                        if (item.status === "Processing") {
+                            $(`#status_csv-${item.id}`).text(`${item.status}`);
+                        }
+                    });
+                }
+            });
+        } setInterval(updateRealTimeData, 1000);
     </script>
 @endsection

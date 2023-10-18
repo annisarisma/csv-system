@@ -36,11 +36,6 @@ class CsvImportJob implements ShouldQueue
         $temporary = $this->temporary;
         $csvFileId = $this->csvFileId;
 
-        $csvFile = Csv::where('id', $csvFileId)->first();
-        $csvFile->update([
-            'status' => "Processing"
-        ]);
-
         $this->broadcastStatus($csvFileId, "Processing");
         
         try {

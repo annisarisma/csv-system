@@ -140,7 +140,10 @@ class CsvController extends Controller
             // Broadcast Event
             $user_search = User::where('id', auth()->id())->first();
             $name = $user_search->username;
-            event(new CsvImportEvent($name));
+            $createdAt = Carbon::parse($csvFile->created_at);
+            $timeAgo = $createdAt->diffForHumans();
+            $timeSet = Carbon::parse($csvFile->created_at)->format('d-m-Y H:i');
+            event(new CsvImportEvent($name, $csvFile, $timeAgo, $timeSet));
 
             // Start Job
             CsvImportJob::dispatch($temporary->name, $csvFile->id);
@@ -153,6 +156,31 @@ class CsvController extends Controller
                 'message' => 'File extension not accept, require .csv file'
             ]));
         }
+    }
+
+    public function real_time(Csv $csv)
+    {
+        $csvFiles = Csv::all();
+        
+        $csvFileDatas = [];
+        foreach ($csvFiles as $csvFile) {
+            $createdAt = Carbon::parse($csvFile->created_at);
+            $timeAgo = $createdAt->diffForHumans();
+            $timeSet = Carbon::parse($csvFile->created_at)->format('d-m-Y H:i');
+
+            // Add to Array
+            $csvFileDatas[] = [
+                'id' => $csvFile->id,
+                'user_id' => $csvFile->user_id,
+                'filename' => $csvFile->filename,
+                'status' => $csvFile->status,
+                'timeAgo' => $timeAgo,
+                'timeSet' => $timeSet,
+                'created_at' => $csvFile->created_at,
+                'updated_at' => $csvFile->updated_at,
+            ];
+        }
+        return response()->json(['csvFileDatas' => $csvFileDatas]);
     }
 
     /**

@@ -15,12 +15,19 @@ class CsvImportEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $name;
+    public $csvFile;
+    public $timeAgo;
+    public $timeSet;
+
     /**
      * Create a new event instance.
      */
-    public function __construct($name)
+    public function __construct($name, $csvFile, $timeAgo, $timeSet)
     {
         $this->name = $name;
+        $this->csvFile = $csvFile;
+        $this->timeAgo = $timeAgo;
+        $this->timeSet = $timeSet;
     }
 
     /**
