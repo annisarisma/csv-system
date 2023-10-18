@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CsvImportEvent;
+use App\Jobs\CsvImportJob;
 use App\Models\Csv;
 use App\Models\Temporary;
 use App\Models\User;
@@ -117,6 +118,9 @@ class CsvController extends Controller
             $user_search = User::where('id', auth()->id())->first();
             $name = $user_search->username;
             event(new CsvImportEvent($name));
+
+            // Start Job
+            CsvImportJob::dispatch($temporary->name, $csvFile->id);
             
             return redirect('/csv-create')->with('success-alert', [
                 'message' => 'Upload file successfully'
