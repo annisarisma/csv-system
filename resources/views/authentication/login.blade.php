@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
           <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="remember" checked />
-          <label class="form-check-label" for="flexSwitchCheckChecked">Ingat Saya</label>
+          <label class="form-check-label" for="flexSwitchCheckChecked">Remember me</label>
         </div>
         <div class="d-grid gap-2">
           <button type="submit" class="btn btn-primary">Login</button>
