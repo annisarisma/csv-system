@@ -22,13 +22,21 @@ Route::get('/', function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/register', 'register_index');
     Route::post('/register/store', 'register_store');
-    Route::get('/login', 'login_index');
+    Route::get('/login', 'login_index')->name('login');
     Route::post('/login/store', 'login_store');
+    Route::post('/logout', 'logout');
 });
-Route::controller(CsvController::class)->group(function () {
-    Route::get('/csv-create', 'create');
-    Route::get('/csv-create/real-time', 'real_time');
-    Route::post('/csv-store', 'store');
-    Route::post('/csv-file/temporary', 'temporary_store')->name('csv-upload');
-    Route::delete('/csv-file/temporary', 'temporary_destroy')->name('csv-destroy');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::post('/logout', 'logout');
+    });
+
+    Route::controller(CsvController::class)->group(function () {
+        Route::get('/csv-create', 'create');
+        Route::get('/csv-create/real-time', 'real_time');
+        Route::post('/csv-store', 'store');
+        Route::post('/csv-file/temporary', 'temporary_store')->name('csv-upload');
+        Route::delete('/csv-file/temporary', 'temporary_destroy')->name('csv-destroy');
+    });
 });

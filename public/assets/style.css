@@ -21,6 +21,35 @@ body {
     padding: 20px;
 }
 
+/* Navbar */
+.navbar {
+    background-color: #5d21d2 !important;
+}
+
+.left-side {
+    align-items: center;
+    padding-right: 50px;
+}
+
+.dropdown-toggle {
+    border: none !important;
+}
+
+.img-container {
+    width: 40px;
+    height: 40px;
+    background-color: #5d21d2;
+    border-radius: 50%;
+}
+
+.logout {
+    margin: 0px 0px 0px 2px;
+}
+
+.btn-logout {
+    border: none !important;
+}
+
 /* Filepond */
 form {
     margin: 40px;

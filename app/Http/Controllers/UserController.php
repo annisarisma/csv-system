@@ -100,7 +100,7 @@ class UserController extends Controller
 
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('/')->with('success-alert', [
+            return redirect()->intended('/csv-create')->with('success-alert', [
                 'message' => $request->username . ' successfully login'
             ]);
         }
@@ -114,9 +114,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function logout(Request $request)
     {
-        //
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 
     /**
