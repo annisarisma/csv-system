@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -39,7 +40,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function register_store(Request $request)
     {
         // Validation data
         $request->validate(
@@ -78,6 +79,36 @@ class UserController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect('/register');
         }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function login_store(Request $request)
+    {
+        $remember = $request->has('remember') ? true : false;
+        $request->validate(
+            [
+                'username' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'username.required' => 'Email harus diisi',
+                'password.required' => 'Password harus diisi',
+            ]
+        );
+
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/')->with('success-alert', [
+                'message' => $request->username . ' successfully login'
+            ]);
+        }
+
+        // if not succeed
+        return back()->withErrors([
+            'password' => ["Username or password doesn't match"]
+        ]);
     }
 
     /**

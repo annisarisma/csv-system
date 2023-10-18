@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/register', 'register_index');
-    Route::post('/register/store', 'store');
+    Route::post('/register/store', 'register_store');
     Route::get('/login', 'login_index');
+    Route::post('/login/store', 'login_store');
 });
