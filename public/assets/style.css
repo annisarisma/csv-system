@@ -1,0 +1,22 @@
+body {
+    background-color: whitesmoke;
+}
+
+.wrapper .container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .container .container-login {
+    width: 40%;
+    height: fit-content;
+    padding: 12px;
+    background-color: white;
+}
+
+.wrapper .container form {
+    width: 30%;
+    padding: 20px;
+}
