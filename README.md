@@ -1,7 +1,8 @@
-# <p align="center"> <img src="https://cdn3.emoji.gg/emojis/3493-diamond2.gif" width="40px" height="40px" alt="Diamond2"> Welcome to CSV System <img src="https://cdn3.emoji.gg/emojis/3493-diamond2.gif" width="40px" height="40px" alt="Diamond2"> </p>
+# <p align="center"> <a href="https://emoji.gg/emoji/1782_MinecraftTorch"><img src="https://cdn3.emoji.gg/emojis/1782_MinecraftTorch.gif" width="64px" height="64px" alt="MinecraftTorch"></a> Welcome to CSV System <a href="https://emoji.gg/emoji/1782_MinecraftTorch"><img src="https://cdn3.emoji.gg/emojis/1782_MinecraftTorch.gif" width="64px" height="64px" alt="MinecraftTorch"></a> </p>
+
 
 ## About CSV Sysytem
-Hi there, welcome to the CSV System repository. Here, I provide a simple documentation and details about the system I've created.
+Hi there, welcome to the CSV System repository. Here, I provide a simple documentation and details about the system I've created. Enjoy! 💁‍♀️
 
 <video src="https://user-images.githubusercontent.com/92117047/276187203-9e21b901-fec3-42e0-b7fb-0988c484abd1.mp4"></video>
 
@@ -10,9 +11,10 @@ Hi there, welcome to the CSV System repository. Here, I provide a simple documen
 - jQuery
 - AJAX
 - CSV League
+- Datatables
 
 ### 🕹️ WebSocket technology I've used:
-- Pusher for Laravel events
+- Laravel Event Pusher
 
 ### 🎡 Background processing I've used:
 - Laravel Database Queue Jobs
@@ -45,12 +47,16 @@ I use Miro to design the database, and it's as simple as this.
 3. cp .env.example .env
 4. php artisan migrate
 5. php artisan db:seed
-6. php artisan serve
-7. composer require pusher/pusher-php-server
-8. composer require league/csv
-9. composer update
+6. composer require pusher/pusher-php-server
+7. composer require league/csv
+8. composer update
+9. php artisan serve
 
+### <a href="https://emoji.gg/emoji/8663-pinged-creeper"><img src="https://cdn3.emoji.gg/emojis/8663-pinged-creeper.png" width="20px" alt="pinged_creeper"></a> A Small Addition
 I have implemented a simple user authentication system to provide real-time notifications to another users. You can log in using the username and password created by the seeder.
 
-- user 1: username: johndoe, password: 123456
-- user 2: username: alice, password: 123456
+- user 1 👨‍🦰: username: johndoe, password: 123456
+- user 2 👩‍🦰: username: alice, password: 123456
+
+### ➕➕➕✍️🙋‍♀️ PS Notes!
+I've created some cool issues that you can check out in the GitHub issue menu. Feel free to follow my journey in building this app through the commit references listed there. Enjoy!
