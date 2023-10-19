@@ -59,4 +59,4 @@ I have implemented a simple user authentication system to provide real-time noti
 - user 2 👩‍🦰: username: alice, password: 123456
 
 ### ➕➕➕✍️🙋‍♀️ PS Notes!
-I've created some cool issues that you can check out in the GitHub issue menu. Feel free to follow my journey in building this app through the commit references listed there. Enjoy!
+I've created some issues that you can check out in the GitHub issue menu. Feel free to follow my journey in building this app through the commit references listed there. Enjoy!
