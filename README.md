@@ -43,8 +43,8 @@ I use Miro to design the database, and it's as simple as this.
 
 ## 🎮 Let's Start!
 1. composer install
-2. php artisan key:generate
-3. cp .env.example .env
+2. cp .env.example .env
+3. php artisan key:generate
 4. php artisan migrate
 5. php artisan db:seed
 6. composer require pusher/pusher-php-server
